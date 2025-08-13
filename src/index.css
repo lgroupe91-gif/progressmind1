@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode styles */
+@layer base {
+  .dark {
+    color-scheme: dark;
+  }
+  
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+  
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
+  
+  .dark .bg-white {
+    @apply bg-gray-800;
+  }
+  
+  .dark .text-gray-800 {
+    @apply text-gray-100;
+  }
+  
+  .dark .text-gray-600 {
+    @apply text-gray-300;
+  }
+  
+  .dark .text-gray-500 {
+    @apply text-gray-400;
+  }
+  
+  .dark .border-gray-100 {
+    @apply border-gray-700;
+  }
+  
+  .dark .border-gray-200 {
+    @apply border-gray-600;
+  }
+  
+  .dark .border-gray-300 {
+    @apply border-gray-500;
+  }
+  
+  /* Dark mode routine colors */
+  .dark .bg-purple-100 {
+    @apply bg-purple-800;
+  }
+  
+  .dark .bg-green-100 {
+    @apply bg-green-800;
+  }
+  
+  .dark .bg-blue-100 {
+    @apply bg-blue-800;
+  }
+  
+  .dark .bg-orange-100 {
+    @apply bg-orange-800;
+  }
+  
+  .dark .bg-yellow-100 {
+    @apply bg-yellow-800;
+  }
+  
+  .dark .bg-indigo-100 {
+    @apply bg-indigo-800;
+  }
+  
+  .dark .bg-teal-100 {
+    @apply bg-teal-800;
+  }
+  
+  .dark .border-purple-300 {
+    @apply border-purple-600;
+  }
+  
+  .dark .border-green-300 {
+    @apply border-green-600;
+  }
+  
+  .dark .border-blue-300 {
+    @apply border-blue-600;
+  }
+  
+  .dark .border-orange-300 {
+    @apply border-orange-600;
+  }
+  
+  .dark .border-yellow-300 {
+    @apply border-yellow-600;
+  }
+  
+  .dark .border-indigo-300 {
+    @apply border-indigo-600;
+  }
+  
+  .dark .border-teal-400 {
+    @apply border-teal-500;
+  }
+  
+  /* Dark mode text colors for badges */
+  .dark .text-purple-700 {
+    @apply text-purple-200;
+  }
+  
+  .dark .text-blue-700 {
+    @apply text-blue-200;
+  }
+  
+  .dark .text-indigo-700 {
+    @apply text-indigo-200;
+  }
+  
+  .dark .text-orange-700 {
+    @apply text-orange-200;
+  }
+  
+  .dark .text-green-600 {
+    @apply text-green-200;
+  }
+}
