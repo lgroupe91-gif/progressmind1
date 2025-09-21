@@ -18,7 +18,7 @@ const NotesTab: React.FC<NotesTabProps> = ({
   const [activeTab, setActiveTab] = useState<'notes' | 'todos'>('notes');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingNote, setEditingNote] = useState<string | null>(null);
-  const [newNote, setNewNote] = useState({
+  const [newNote, setNewNote] = useState<Omit<Note, 'id' | 'createdAt' | 'updatedAt'>>({
     title: '',
     content: '',
     type: 'note' as const
