@@ -19,7 +19,7 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
   onDeleteGoal,
   onCreateRoutineFromGoal
 }) => {
-  const [activeTimeframe, setActiveTimeframe] = useState<'1month' | '3months' | '6months' | '1year' | '5years'>('5years');
+  const [activeTimeframe, setActiveTimeframe] = useState<'1week' | '3months' | '1year' | '5years'>('5years');
   const [showAddForm, setShowAddForm] = useState(false);
   const [showSmartForm, setShowSmartForm] = useState(false);
   const [editingGoal, setEditingGoal] = useState<string | null>(null);
@@ -61,9 +61,8 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
   const timeframes = {
     '5years': { label: '5 ans', icon: '🎯', color: 'from-purple-500 to-purple-700', description: 'Vision à long terme' },
     '1year': { label: '1 an', icon: '📅', color: 'from-blue-500 to-blue-700', description: 'Objectifs annuels' },
-    '6months': { label: '6 mois', icon: '🚀', color: 'from-green-500 to-green-700', description: 'Projets semestriels' },
     '3months': { label: '3 mois', icon: '⚡', color: 'from-orange-500 to-orange-700', description: 'Objectifs trimestriels' },
-    '1month': { label: '1 mois', icon: '🎪', color: 'from-red-500 to-red-700', description: 'Actions mensuelles' }
+    '1week': { label: '1 semaine', icon: '🚀', color: 'from-green-500 to-green-700', description: 'Actions hebdomadaires' }
   };
 
   const categories = {
@@ -88,14 +87,11 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
       case '1year':
         targetDate.setFullYear(targetDate.getFullYear() + 1);
         break;
-      case '6months':
-        targetDate.setMonth(targetDate.getMonth() + 6);
-        break;
       case '3months':
         targetDate.setMonth(targetDate.getMonth() + 3);
         break;
-      case '1month':
-        targetDate.setMonth(targetDate.getMonth() + 1);
+      case '1week':
+        targetDate.setDate(targetDate.getDate() + 7);
         break;
     }
 
@@ -184,9 +180,8 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
   const createChildGoal = (parentGoal: Goal) => {
     const childTimeframes = {
       '5years': '1year',
-      '1year': '6months',
-      '6months': '3months',
-      '3months': '1month'
+      '1year': '3months',
+      '3months': '1week'
     } as const;
 
     const childTimeframe = childTimeframes[parentGoal.timeframe as keyof typeof childTimeframes];
@@ -237,7 +232,7 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
 
       {/* Timeframe Navigation */}
       <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-4">
           {Object.entries(timeframes).map(([key, timeframe]) => (
             <button
               key={key}
@@ -279,6 +274,19 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
           >
             <Target className="w-5 h-5" />
             <span>Objectif SMART 5 ans</span>
+          </button>
+        )}
+        
+        {activeTimeframe === '1year' && (
+          <button
+            onClick={() => {
+              setShowAddForm(true);
+              setShowSmartForm(true);
+            }}
+            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-all duration-300 transform hover:scale-105"
+          >
+            <Target className="w-5 h-5" />
+            <span>Objectif SMART 1 an</span>
           </button>
         )}
       </div>
