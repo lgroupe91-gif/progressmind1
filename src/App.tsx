@@ -7,6 +7,7 @@ import NotesTab from './components/NotesTab';
 import CalendarTab from './components/CalendarTab';
 import StatsTab from './components/StatsTab';
 import NotificationSettings from './components/NotificationSettings';
+import UserProfile from './components/UserProfile';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useNotifications } from './hooks/useNotifications';
 import { Routine, Note, Goal } from './types';
@@ -20,6 +21,7 @@ function App() {
   const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
   const [goals, setGoals] = useLocalStorage<Goal[]>('goals', []);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  const [showUserProfile, setShowUserProfile] = useState(false);
   
   const userName = "Alex";
   const currentStreak = routines.reduce((max, routine) => Math.max(max, routine.streak), 0);
@@ -207,6 +209,7 @@ function App() {
         userName={userName} 
         currentStreak={currentStreak}
         onOpenNotifications={() => setShowNotificationSettings(true)}
+        onOpenProfile={() => setShowUserProfile(true)}
       />
       
       <main className="py-4 px-3">
@@ -217,6 +220,10 @@ function App() {
       
       {showNotificationSettings && (
         <NotificationSettings onClose={() => setShowNotificationSettings(false)} />
+      )}
+      
+      {showUserProfile && (
+        <UserProfile onClose={() => setShowUserProfile(false)} />
       )}
     </div>
   );

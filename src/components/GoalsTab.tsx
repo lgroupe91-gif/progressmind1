@@ -475,16 +475,29 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
                   <div className="flex justify-between text-sm text-gray-600 mb-1">
                     <span>Progression</span>
                     <div className="flex items-center space-x-2">
-                      <span>{goal.progress}%</span>
-                      {editingGoal === goal.id && (
-                        <input
-                          type="range"
-                          min="0"
-                          max="100"
-                          value={editGoal.progress}
-                          onChange={(e) => setEditGoal({...editGoal, progress: parseInt(e.target.value)})}
-                          className="w-20"
-                        />
+                      {editingGoal === goal.id ? (
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={editGoal.progress}
+                            onChange={(e) => setEditGoal({...editGoal, progress: parseInt(e.target.value)})}
+                            className="w-20"
+                          />
+                          <span className="font-medium text-blue-600">{editGoal.progress}%</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center space-x-2">
+                          <span>{goal.progress}%</span>
+                          <button
+                            onClick={() => handleEditGoal(goal)}
+                            className="text-blue-500 hover:text-blue-700 text-xs"
+                            title="Modifier la progression"
+                          >
+                            ✏️
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>

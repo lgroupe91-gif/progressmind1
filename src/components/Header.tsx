@@ -1,14 +1,15 @@
 import React from 'react';
-import { Rocket, User, Settings, Bell } from 'lucide-react';
+import { Rocket, User, Bell } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   userName: string;
   currentStreak: number;
   onOpenNotifications: () => void;
+  onOpenProfile: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ userName, currentStreak, onOpenNotifications }) => {
+const Header: React.FC<HeaderProps> = ({ userName, currentStreak, onOpenNotifications, onOpenProfile }) => {
   return (
     <header className="bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 text-white p-3 shadow-lg">
       <div className="flex items-center justify-between">
@@ -42,11 +43,12 @@ const Header: React.FC<HeaderProps> = ({ userName, currentStreak, onOpenNotifica
               <Bell className="w-4 h-4" />
             </button>
             <ThemeToggle />
-            <button className="bg-white/20 hover:bg-white/30 p-1.5 rounded-full transition-colors hidden sm:block">
+            <button 
+              onClick={onOpenProfile}
+              className="bg-white/20 hover:bg-white/30 p-1.5 rounded-full transition-colors"
+              title="Profil utilisateur"
+            >
               <User className="w-4 h-4" />
-            </button>
-            <button className="bg-white/20 hover:bg-white/30 p-1.5 rounded-full transition-colors hidden sm:block">
-              <Settings className="w-4 h-4" />
             </button>
           </div>
         </div>
