@@ -207,7 +207,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     onAddRoutine({
       title: template.title,
       description: currentStep.description,
-      category: template.category,
+      category: selectedCategory, // Utilise la catégorie sélectionnée au lieu de celle du template
       duration: currentStep.duration,
       completed: false,
       streak: 0,
@@ -579,7 +579,6 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Template Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {extendedRoutineTemplates
-              .filter(template => template.category === selectedCategory)
               .map((template) => (
                 <div key={template.id} className="border border-gray-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
                   <div className="flex items-center space-x-3 mb-3">
@@ -601,9 +600,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                   )}
                   <button
                     onClick={() => handleAddTemplate(template)}
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg text-sm transition-colors"
+                    className={`w-full text-white py-2 rounded-lg text-sm transition-colors bg-gradient-to-r ${categories[selectedCategory].color}`}
                   >
-                    Ajouter cette routine
+                    Ajouter au {categories[selectedCategory].label.toLowerCase()}
                   </button>
                 </div>
               ))}
@@ -631,6 +630,25 @@ const Dashboard: React.FC<DashboardProps> = ({
                   className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   required
                 />
+                <select
+                  value={customRoutine.category}
+                  onChange={(e) => setCustomRoutine({...customRoutine, category: e.target.value as any})}
+                  className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  {Object.entries(categories).map(([key, cat]) => (
+                    <option key={key} value={key}>{cat.icon} {cat.label}</option>
+                  ))}
+                </select>
+              </div>
+              <textarea
+                placeholder="Description de la routine"
+                value={customRoutine.description}
+                onChange={(e) => setCustomRoutine({...customRoutine, description: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                rows={3}
+                required
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="number"
                   placeholder="Durée (minutes)"
@@ -641,25 +659,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                   max="120"
                   required
                 />
-              </div>
-              <textarea
-                placeholder="Description de la routine"
-                value={customRoutine.description}
-                onChange={(e) => setCustomRoutine({...customRoutine, description: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                rows={3}
-                required
-              />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <select
-                  value={customRoutine.category}
-                  onChange={(e) => setCustomRoutine({...customRoutine, category: e.target.value as any})}
-                  className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                >
-                  {Object.entries(categories).map(([key, cat]) => (
-                    <option key={key} value={key}>{cat.icon} {cat.label}</option>
-                  ))}
-                </select>
                 <input
                   type="time"
                   placeholder="Heure de rappel"
@@ -667,6 +666,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                   onChange={(e) => setCustomRoutine({...customRoutine, scheduledTime: e.target.value})}
                   className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="text"
                   placeholder="Icône (emoji)"
@@ -674,18 +675,18 @@ const Dashboard: React.FC<DashboardProps> = ({
                   onChange={(e) => setCustomRoutine({...customRoutine, icon: e.target.value})}
                   className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
-              </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="notifications"
-                  checked={customRoutine.notificationsEnabled}
-                  onChange={(e) => setCustomRoutine({...customRoutine, notificationsEnabled: e.target.checked})}
-                  className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                />
-                <label htmlFor="notifications" className="text-sm text-gray-700">
-                  Activer les notifications (rappel 10 min avant)
-                </label>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="notifications"
+                    checked={customRoutine.notificationsEnabled}
+                    onChange={(e) => setCustomRoutine({...customRoutine, notificationsEnabled: e.target.checked})}
+                    className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <label htmlFor="notifications" className="text-sm text-gray-700">
+                    Notifications
+                  </label>
+                </div>
               </div>
               <div className="flex space-x-3">
                 <button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg">
