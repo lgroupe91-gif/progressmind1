@@ -3,31 +3,22 @@ import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
 import GoalsTab from './components/GoalsTab';
-import GratitudeTab from './components/GratitudeTab';
-import ManifestationTab from './components/ManifestationTab';
-import MusicTab from './components/MusicTab';
 import NotesTab from './components/NotesTab';
 import CalendarTab from './components/CalendarTab';
 import StatsTab from './components/StatsTab';
 import NotificationSettings from './components/NotificationSettings';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useNotifications } from './hooks/useNotifications';
-import { Routine, Note, MusicTrack, Goal, GratitudeEntry, Manifestation } from './types';
+import { Routine, Note, Goal } from './types';
 import { 
   initialRoutines, 
-  musicTracks,
-  initialGratitudeEntries,
-  initialManifestations
 } from './data/mockData';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [routines, setRoutines] = useLocalStorage<Routine[]>('routines', initialRoutines);
   const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
-  const [tracks, setTracks] = useLocalStorage<MusicTrack[]>('musicTracks', musicTracks);
   const [goals, setGoals] = useLocalStorage<Goal[]>('goals', []);
-  const [gratitudeEntries, setGratitudeEntries] = useLocalStorage<GratitudeEntry[]>('gratitudeEntries', initialGratitudeEntries);
-  const [manifestations, setManifestations] = useLocalStorage<Manifestation[]>('manifestations', initialManifestations);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   
   const userName = "Alex";
@@ -85,14 +76,6 @@ function App() {
     setRoutines(routines.filter(routine => routine.id !== id));
   };
 
-  const handleAddTrack = (track: Omit<MusicTrack, 'id'>) => {
-    const newTrack: MusicTrack = {
-      ...track,
-      id: Date.now().toString()
-    };
-    setTracks([...tracks, newTrack]);
-  };
-
   const handleAddNote = (note: Omit<Note, 'id'>) => {
     const newNote: Note = {
       ...note,
@@ -137,27 +120,6 @@ function App() {
     });
   };
 
-  const handleAddGratitudeEntry = (entry: Omit<GratitudeEntry, 'id'>) => {
-    const newEntry: GratitudeEntry = {
-      ...entry,
-      id: Date.now().toString()
-    };
-    setGratitudeEntries([newEntry, ...gratitudeEntries]);
-  };
-
-  const handleAddManifestation = (manifestation: Omit<Manifestation, 'id'>) => {
-    const newManifestation: Manifestation = {
-      ...manifestation,
-      id: Date.now().toString()
-    };
-    setManifestations([newManifestation, ...manifestations]);
-  };
-
-  const handleVisualizeManifestation = (id: string) => {
-    setManifestations(manifestations.map(m => 
-      m.id === id ? { ...m, visualized: true } : m
-    ));
-  };
   // Handle routine progression
   React.useEffect(() => {
     const checkProgression = () => {
@@ -204,16 +166,6 @@ function App() {
             onCreateRoutineFromGoal={handleCreateRoutineFromGoal}
           />
         );
-      case 'manifestation':
-        return (
-          <ManifestationTab
-            manifestations={manifestations}
-            onAddManifestation={handleAddManifestation}
-            onVisualizeManifestation={handleVisualizeManifestation}
-          />
-        );
-      case 'music':
-        return <MusicTab tracks={tracks} onAddTrack={handleAddTrack} />;
       case 'notes':
         return (
           <NotesTab
@@ -230,14 +182,6 @@ function App() {
           <StatsTab 
             routines={routines}
             goals={goals}
-            gratitudeEntries={gratitudeEntries}
-          />
-        );
-      case 'gratitude':
-        return (
-          <GratitudeTab
-            gratitudeEntries={gratitudeEntries}
-            onAddEntry={handleAddGratitudeEntry}
           />
         );
       default:

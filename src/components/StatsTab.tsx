@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react';
 import { TrendingUp, Calendar, Target, Award, BarChart3, PieChart, Activity, Clock } from 'lucide-react';
-import { Routine, Goal, GratitudeEntry } from '../types';
+import { Routine, Goal } from '../types';
 
 interface StatsTabProps {
   routines: Routine[];
   goals: Goal[];
-  gratitudeEntries: GratitudeEntry[];
 }
 
-const StatsTab: React.FC<StatsTabProps> = ({ routines, goals, gratitudeEntries }) => {
+const StatsTab: React.FC<StatsTabProps> = ({ routines, goals }) => {
   const stats = useMemo(() => {
     const today = new Date();
     const thisWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -29,10 +28,9 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals, gratitudeEntries }
     const avgProgress = goals.length > 0 ? 
       goals.reduce((sum, g) => sum + g.progress, 0) / goals.length : 0;
 
-    // Gratitude stats
-    const gratitudeThisWeek = gratitudeEntries.filter(entry => 
-      new Date(entry.date) >= thisWeek
-    ).length;
+    // Routine completion stats
+    const gratitudeRoutines = routines.filter(r => r.title.includes('Gratitude')).length;
+    const manifestationRoutines = routines.filter(r => r.title.includes('Manifestation') || r.title.includes('Visualisation')).length;
 
     // Weekly progression
     const weeklyData = Array.from({ length: 7 }, (_, i) => {
@@ -57,10 +55,11 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals, gratitudeEntries }
       completedGoals,
       inProgressGoals,
       avgProgress,
-      gratitudeThisWeek,
+      gratitudeRoutines,
+      manifestationRoutines,
       weeklyData
     };
-  }, [routines, goals, gratitudeEntries]);
+  }, [routines, goals]);
 
   const getCategoryStats = () => {
     const categories = {
@@ -236,20 +235,20 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals, gratitudeEntries }
         </div>
 
         <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Gratitude</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Routines spéciales</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Cette semaine</span>
-              <span className="font-bold text-pink-600">{stats.gratitudeThisWeek}</span>
+              <span className="text-gray-600">Gratitude</span>
+              <span className="font-bold text-pink-600">{stats.gratitudeRoutines}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Total entrées</span>
-              <span className="font-bold text-pink-600">{gratitudeEntries.length}</span>
+              <span className="text-gray-600">Manifestation</span>
+              <span className="font-bold text-purple-600">{stats.manifestationRoutines}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Constance</span>
+              <span className="text-gray-600">Mindset</span>
               <span className="font-bold text-pink-600">
-                {gratitudeEntries.length > 0 ? '🔥' : '💤'}
+                {stats.gratitudeRoutines + stats.manifestationRoutines > 0 ? '🔥' : '💤'}
               </span>
             </div>
           </div>

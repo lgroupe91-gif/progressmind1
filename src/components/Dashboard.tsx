@@ -178,6 +178,30 @@ const Dashboard: React.FC<DashboardProps> = ({
     "Je suis reconnaissant(e) pour toutes les opportunités qui s'offrent à moi"
   ];
 
+  const getGratitudeExamples = () => [
+    'Ma santé qui me permet de vivre pleinement',
+    'Un moment de rire partagé avec un proche',
+    'Le confort de mon foyer',
+    'Une compétence que j\'ai développée',
+    'Un acte de gentillesse reçu ou donné',
+    'La beauté de la nature qui m\'entoure',
+    'Une opportunité qui s\'est présentée',
+    'Mon lit douillet après une longue journée',
+    'Un repas délicieux que j\'ai savouré',
+    'La technologie qui facilite ma vie',
+    'Un livre ou film qui m\'a inspiré(e)',
+    'La liberté de faire mes propres choix'
+  ];
+
+  const getManifestationExamples = () => [
+    'Je me vois déjà dans mon nouveau poste, confiant(e) et épanoui(e)',
+    'Je ressens la joie d\'avoir atteint mon objectif de santé',
+    'Je visualise ma relation harmonieuse et aimante',
+    'Je me vois célébrant ma réussite financière',
+    'J\'imagine ma vie équilibrée et sereine',
+    'Je ressens la fierté d\'avoir accompli mon rêve'
+  ];
+
   const handleAddTemplate = (template: RoutineTemplate) => {
     const currentStep = template.progressionSteps[0];
     onAddRoutine({
@@ -232,7 +256,9 @@ const Dashboard: React.FC<DashboardProps> = ({
   const renderRoutineItem = (routine: Routine) => {
     const needsInput = routine.title.includes('Gratitude') || 
                       routine.title.includes('Planification') || 
-                      routine.title.includes('Affirmations');
+                      routine.title.includes('Affirmations') ||
+                      routine.title.includes('Manifestation') ||
+                      routine.title.includes('Visualisation');
     
     const isEditing = editingRoutine === routine.id;
     const isMeditation = routine.title.toLowerCase().includes('méditation');
@@ -394,6 +420,38 @@ const Dashboard: React.FC<DashboardProps> = ({
                         </div>
                       </div>
                     )}
+                    {routine.title.includes('Gratitude') && (
+                      <div className="text-xs text-pink-600 mb-2">
+                        <p className="font-medium">Exemples de gratitude :</p>
+                        <div className="grid grid-cols-1 gap-1 mt-1">
+                          {getGratitudeExamples().slice(0, 3).map((example, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setInputValue(example)}
+                              className="text-left text-xs text-pink-500 hover:text-pink-700 hover:bg-pink-50 p-1 rounded"
+                            >
+                              "• {example}"
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {(routine.title.includes('Manifestation') || routine.title.includes('Visualisation')) && (
+                      <div className="text-xs text-purple-600 mb-2">
+                        <p className="font-medium">Exemples de visualisation :</p>
+                        <div className="grid grid-cols-1 gap-1 mt-1">
+                          {getManifestationExamples().slice(0, 3).map((example, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setInputValue(example)}
+                              className="text-left text-xs text-purple-500 hover:text-purple-700 hover:bg-purple-50 p-1 rounded"
+                            >
+                              "• {example}"
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <div className="space-y-2">
                     <textarea
                       value={inputValue}
@@ -402,6 +460,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                         routine.title.includes('Gratitude') ? 'Pour quoi es-tu reconnaissant(e) aujourd\'hui ?' :
                         routine.title.includes('Planification') ? 'Quelles sont tes priorités pour demain ?' :
                         routine.title.includes('Affirmations') ? 'Écris tes affirmations positives...' :
+                        routine.title.includes('Manifestation') || routine.title.includes('Visualisation') ? 'Décris ta visualisation avec émotion et détails...' :
                         'Écris tes pensées...'
                       }
                       className="w-full p-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -427,13 +486,21 @@ const Dashboard: React.FC<DashboardProps> = ({
                     </div>
                   </>
                 ) : routine.inputValue ? (
-                  <div className="bg-teal-100 p-3 rounded-lg text-sm text-gray-700 border-l-4 border-teal-400 shadow-sm">
+                  <div className={`p-3 rounded-lg text-sm text-gray-700 border-l-4 shadow-sm ${
+                    routine.title.includes('Gratitude') ? 'bg-pink-100 border-pink-400' :
+                    routine.title.includes('Manifestation') || routine.title.includes('Visualisation') ? 'bg-purple-100 border-purple-400' :
+                    routine.title.includes('Affirmations') ? 'bg-blue-100 border-blue-400' :
+                    'bg-teal-100 border-teal-400'
+                  }`}>
                     {routine.inputValue}
                   </div>
                 ) : (
                   <div className="text-sm text-gray-500 italic">
                     Clique sur ✏️ pour {routine.title.includes('Gratitude') ? 'exprimer ta gratitude' : 
-                    routine.title.includes('Planification') ? 'planifier demain' : 'écrire tes affirmations'}
+                    routine.title.includes('Planification') ? 'planifier demain' : 
+                    routine.title.includes('Affirmations') ? 'écrire tes affirmations' :
+                    routine.title.includes('Manifestation') || routine.title.includes('Visualisation') ? 'visualiser tes objectifs' :
+                    'compléter cette routine'}
                   </div>
                 )}
               </div>

@@ -1,4 +1,4 @@
-import { Routine, GratitudeEntry, Manifestation, MusicTrack, RoutineTemplate } from '../types';
+import { Routine, RoutineTemplate } from '../types';
 
 export const extendedRoutineTemplates: RoutineTemplate[] = [
   // Morning routines
@@ -124,31 +124,27 @@ export const extendedRoutineTemplates: RoutineTemplate[] = [
     ]
   },
   {
-    id: 'gratitude-morning',
-    title: 'Gratitude matinale',
-    description: 'Exprime ta gratitude pour commencer la journée positivement',
+    id: 'gratitude',
+    title: 'Journal de gratitude',
+    description: 'Exprime 3 choses pour lesquelles tu es reconnaissant(e)',
     category: 'morning',
     icon: '🙏',
     color: 'bg-rose-500',
-    isProgressive: true,
+    isProgressive: false,
     progressionSteps: [
-      { week: 1, duration: 3, description: '1 élément de gratitude' },
-      { week: 4, duration: 5, description: '2 éléments de gratitude' },
-      { week: 7, duration: 7, description: '3 éléments de gratitude' }
+      { week: 1, duration: 5, description: 'Écris 3 choses pour lesquelles tu es reconnaissant(e)' }
     ]
   },
   {
-    id: 'gratitude-evening',
-    title: 'Gratitude du soir',
-    description: 'Termine ta journée en exprimant ta reconnaissance',
+    id: 'manifestation',
+    title: 'Visualisation/Manifestation',
+    description: 'Visualise tes objectifs comme déjà accomplis',
     category: 'evening',
-    icon: '🙏',
-    color: 'bg-rose-500',
-    isProgressive: true,
+    icon: '✨',
+    color: 'bg-purple-500',
+    isProgressive: false,
     progressionSteps: [
-      { week: 1, duration: 3, description: '1 élément de gratitude' },
-      { week: 4, duration: 5, description: '2 éléments de gratitude' },
-      { week: 7, duration: 7, description: '3 éléments de gratitude' }
+      { week: 1, duration: 10, description: 'Visualise tes objectifs avec émotion et détails' }
     ]
   },
 
@@ -426,32 +422,6 @@ export const initialRoutines: Routine[] = [
   }
 ];
 
-export const initialGratitudeEntries: GratitudeEntry[] = [
-  {
-    id: '1',
-    date: '2025-01-20',
-    entries: [
-      'Ma famille qui me soutient toujours'
-    ],
-    week: 1
-  }
-];
-
-export const gratitudeExamples = [
-  'Ma santé qui me permet de vivre pleinement',
-  'Un moment de rire partagé avec un proche',
-  'Le confort de mon foyer',
-  'Une compétence que j\'ai développée',
-  'Un acte de gentillesse reçu ou donné',
-  'La beauté de la nature qui m\'entoure',
-  'Une opportunité qui s\'est présentée',
-  'Mon lit douillet après une longue journée',
-  'Un repas délicieux que j\'ai savouré',
-  'La technologie qui facilite ma vie',
-  'Un livre ou film qui m\'a inspiré(e)',
-  'La liberté de faire mes propres choix'
-];
-
 export const meditationGuides = [
   {
     week: 1,
@@ -478,44 +448,5 @@ export const meditationGuides = [
       'Si tu remarques des tensions, respire dans cette zone',
       'Termine en prenant conscience de ton corps entier'
     ]
-  }
-];
-
-export const initialManifestations: Manifestation[] = [
-  {
-    id: '1',
-    title: 'Développer une routine matinale solide',
-    description: 'Je me visualise me réveillant naturellement tôt, plein(e) d\'énergie, accomplissant ma routine matinale avec joie et sérénité.',
-    category: 'personal',
-    targetDate: '2025-03-01',
-    visualized: false,
-    createdAt: '2025-01-15'
-  }
-];
-
-export const musicTracks: MusicTrack[] = [
-  {
-    id: '1',
-    title: 'Morning Meditation',
-    artist: 'Zen Sounds',
-    duration: '5:00',
-    category: 'meditation',
-    url: '#'
-  },
-  {
-    id: '2',
-    title: 'Energizing Walk',
-    artist: 'Nature Beats',
-    duration: '10:00',
-    category: 'energy',
-    url: '#'
-  },
-  {
-    id: '3',
-    title: 'Evening Reflection',
-    artist: 'Peaceful Minds',
-    duration: '8:00',
-    category: 'meditation',
-    url: '#'
   }
 ];
