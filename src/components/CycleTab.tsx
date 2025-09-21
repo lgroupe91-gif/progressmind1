@@ -264,7 +264,7 @@ const CycleTab: React.FC = () => {
             <div className="text-center">
               <div className="text-4xl mb-2">{getPhaseEmoji(phaseInfo.phase)}</div>
               <h3 className="text-2xl font-bold mb-2">{getPhaseName(phaseInfo.phase)}</h3>
-              <p className="text-lg mb-2">Jour {phaseInfo.dayOfCycle} du cycle</p>
+              <p className="text-lg mb-2">Jour {phaseInfo.dayOfCycle}/{cycleData.cycleLength}</p>
               <p className="text-white/90">{phaseInfo.advice}</p>
             </div>
           </div>

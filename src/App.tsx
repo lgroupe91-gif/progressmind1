@@ -226,6 +226,7 @@ function App() {
         return (
           <Dashboard 
             routines={routines} 
+            totalStreak={globalStreak}
             onCompleteRoutine={handleCompleteRoutine}
             onUpdateRoutineInput={handleUpdateRoutineInput}
             onAddRoutine={handleAddRoutine}
@@ -268,6 +269,7 @@ function App() {
         return (
           <Dashboard 
             routines={routines} 
+            totalStreak={globalStreak}
             onCompleteRoutine={handleCompleteRoutine}
             onUpdateRoutineInput={handleUpdateRoutineInput}
             onAddRoutine={handleAddRoutine}
