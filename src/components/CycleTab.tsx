@@ -55,6 +55,50 @@ const CycleTab: React.FC = () => {
     }
   };
 
+  const getPhaseInfo = (phase: CyclePhase) => {
+    switch (phase) {
+      case 'menstruation':
+        return {
+          mood: 'Fatigue, sensibilité',
+          message: 'Il est normal de ressentir une baisse d\'énergie.',
+          businessOrientation: 'Favorise l\'introspection et les tâches simples.',
+          cardColor: 'from-red-100 to-red-200 dark:from-red-900 dark:to-red-800',
+          borderColor: 'border-red-300 dark:border-red-600'
+        };
+      case 'folliculaire':
+        return {
+          mood: 'Énergie montante, motivation',
+          message: 'Ton énergie revient, idéale pour démarrer de nouveaux projets.',
+          businessOrientation: 'Planifie, crée, lance des routines ambitieuses.',
+          cardColor: 'from-green-100 to-green-200 dark:from-green-900 dark:to-green-800',
+          borderColor: 'border-green-300 dark:border-green-600'
+        };
+      case 'ovulation':
+        return {
+          mood: 'Confiance, sociabilité',
+          message: 'Ton énergie et ta confiance sont au maximum.',
+          businessOrientation: 'Parfait pour rendez-vous importants, networking, décisions stratégiques.',
+          cardColor: 'from-orange-100 to-orange-200 dark:from-orange-900 dark:to-orange-800',
+          borderColor: 'border-orange-300 dark:border-orange-600'
+        };
+      case 'lutéale':
+        return {
+          mood: 'Irritabilité, besoin de structure',
+          message: 'Les fluctuations d\'humeur sont normales, sois indulgente avec toi-même.',
+          businessOrientation: 'Concentre-toi sur l\'organisation, le suivi et la clôture des dossiers.',
+          cardColor: 'from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800',
+          borderColor: 'border-purple-300 dark:border-purple-600'
+        };
+      default:
+        return {
+          mood: '',
+          message: '',
+          businessOrientation: '',
+          cardColor: 'from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800',
+          borderColor: 'border-gray-300 dark:border-gray-600'
+        };
+    }
+  };
   const calculatePhaseInfo = (lastPeriodDate: string, cycleLength: number): PhaseInfo | null => {
     if (!lastPeriodDate) return null;
 
@@ -236,6 +280,30 @@ const CycleTab: React.FC = () => {
             </blockquote>
           </div>
 
+          {/* Phase Mood & Business Info */}
+          {(() => {
+            const info = getPhaseInfo(phaseInfo.phase);
+            return (
+              <div className={`bg-gradient-to-r ${info.cardColor} p-6 rounded-xl shadow-lg border-2 ${info.borderColor}`}>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Humeur actuelle</h4>
+                    <p className="text-gray-900 dark:text-gray-100 font-bold text-lg">{info.mood}</p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Message rassurant</h4>
+                    <p className="text-gray-700 dark:text-gray-200">{info.message}</p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Orientation business</h4>
+                    <p className="text-gray-700 dark:text-gray-200 text-sm italic">{info.businessOrientation}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
           {/* Adjustments Card */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700">
             <div className="flex items-center space-x-3 mb-4">
