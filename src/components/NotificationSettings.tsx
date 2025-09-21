@@ -10,7 +10,9 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({ onClose }) 
   const [permission, setPermission] = useState<NotificationPermission>('default');
 
   useEffect(() => {
-    setPermission(Notification.permission);
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      setPermission(Notification.permission);
+    }
   }, []);
 
   const requestNotificationPermission = async () => {

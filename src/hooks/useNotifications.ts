@@ -3,7 +3,7 @@ import { Routine } from '../types';
 
 export const useNotifications = (routines: Routine[]) => {
   const scheduleNotification = useCallback((title: string, body: string, delay: number) => {
-    if ('Notification' in window && Notification.permission === 'granted') {
+    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
       setTimeout(() => {
         new Notification(title, {
           body,

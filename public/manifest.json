@@ -7,6 +7,7 @@
   "background_color": "#7c3aed",
   "theme_color": "#7c3aed",
   "orientation": "portrait-primary",
+  "scope": "/",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -23,5 +24,6 @@
   ],
   "categories": ["productivity", "lifestyle", "health"],
   "lang": "fr",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false
 }

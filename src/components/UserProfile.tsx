@@ -39,7 +39,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ onClose }) => {
     currentStreak: 15,
     totalGoals: 6,
     completedGoals: 2,
-    joinDays: Math.floor((new Date().getTime() - new Date(userInfo.joinDate).getTime()) / (1000 * 60 * 60 * 24))
+    joinDays: Math.max(1, Math.floor((new Date().getTime() - new Date(userInfo.joinDate).getTime()) / (1000 * 60 * 60 * 24)))
   };
 
   const handleSaveEdit = () => {

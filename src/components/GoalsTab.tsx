@@ -181,10 +181,11 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
     const childTimeframes = {
       '5years': '1year',
       '1year': '3months',
-      '3months': '1week'
+      '3months': '1week',
+      '1week': null
     } as const;
 
-    const childTimeframe = childTimeframes[parentGoal.timeframe as keyof typeof childTimeframes];
+    const childTimeframe = childTimeframes[parentGoal.timeframe];
     if (!childTimeframe) return;
 
     setActiveTimeframe(childTimeframe);
@@ -512,7 +513,7 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
                 {/* Actions */}
                 <div className="flex items-center justify-between">
                   <div className="flex space-x-2">
-                    {goal.timeframe !== '1month' && (
+                    {goal.timeframe !== '1week' && (
                       <button
                         onClick={() => createChildGoal(goal)}
                         className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-lg text-sm flex items-center space-x-1"

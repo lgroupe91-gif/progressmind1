@@ -127,8 +127,8 @@ function App() {
     const checkProgression = () => {
       setRoutines(currentRoutines => 
         currentRoutines.map(routine => {
-          if (routine.isProgressive && routine.streak > 0 && routine.streak % 21 === 0) {
-            // Every 3 weeks (21 days), check for progression
+          if (routine.isProgressive && routine.streak > 0 && routine.streak % 7 === 0) {
+            // Every week (7 days), check for progression
             const nextStep = routine.progressionSteps.find(step => step.week > routine.week);
             if (nextStep) {
               return {
@@ -145,7 +145,54 @@ function App() {
     };
 
     checkProgression();
-  }, [routines]);
+  }, []);
+
+  // Check progression when routines change
+  React.useEffect(() => {
+    const checkProgression = () => {
+      setRoutines(currentRoutines => 
+        currentRoutines.map(routine => {
+          if (routine.isProgressive && routine.streak > 0 && routine.streak % 7 === 0) {
+            const nextStep = routine.progressionSteps.find(step => step.week > routine.week);
+            if (nextStep) {
+              return {
+                ...routine,
+                week: nextStep.week,
+                duration: nextStep.duration,
+                description: nextStep.description
+              };
+            }
+          }
+          return routine;
+        })
+      );
+    };
+
+    const timeoutId = setTimeout(checkProgression, 100);
+    return () => clearTimeout(timeoutId);
+  }, [routines.map(r => r.streak).join(',')]);
+
+  // Reset completed routines daily
+  React.useEffect(() => {
+    const resetDaily = () => {
+      const lastReset = localStorage.getItem('lastReset');
+      const today = new Date().toDateString();
+      
+      if (lastReset !== today) {
+        setRoutines(currentRoutines => 
+          currentRoutines.map(routine => ({
+            ...routine,
+            completed: false
+          }))
+        );
+        localStorage.setItem('lastReset', today);
+      }
+    };
+
+    resetDaily();
+    const interval = setInterval(resetDaily, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, []);
 
   const renderActiveTab = () => {
     switch (activeTab) {

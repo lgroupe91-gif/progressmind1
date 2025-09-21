@@ -123,6 +123,14 @@ const Dashboard: React.FC<DashboardProps> = ({
           totalTime: 0,
           startTime: 0
         });
+        
+        // Show completion notification
+        if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+          new Notification('🧘 Méditation terminée !', {
+            body: 'Félicitations ! Tu as terminé ta séance de méditation.',
+            icon: '/icon-192.png'
+          });
+        }
       }
     }
     return () => clearInterval(interval);

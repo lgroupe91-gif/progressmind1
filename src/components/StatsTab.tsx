@@ -46,8 +46,10 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals }) => {
     const weeklyData = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(today.getTime() - (6 - i) * 24 * 60 * 60 * 1000);
       const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
-      // Simulation de données pour la démonstration
-      const completed = Math.floor(Math.random() * totalRoutines);
+      // Simulation plus cohérente basée sur la date
+      const daysSinceEpoch = Math.floor(date.getTime() / (1000 * 60 * 60 * 24));
+      const completionRate = 0.5 + (Math.sin(daysSinceEpoch * 0.2) * 0.4); // Entre 10% et 90%
+      const completed = Math.floor(totalRoutines * Math.max(0, Math.min(1, completionRate)));
       return {
         day: dayName,
         completed,

@@ -87,7 +87,6 @@ export interface Goal {
   id: string;
   title: string;
   description: string;
-  timeframe: '1month' | '3months' | '6months' | '1year' | '5years';
   timeframe: '1week' | '3months' | '1year' | '5years';
   category: 'health' | 'career' | 'finance' | 'relationships' | 'personal' | 'education';
   isSmartGoal: boolean;
