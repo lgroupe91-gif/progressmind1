@@ -21,15 +21,40 @@ function App() {
   const [routines, setRoutines] = useLocalStorage<Routine[]>('routines', initialRoutines);
   const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
   const [goals, setGoals] = useLocalStorage<Goal[]>('goals', []);
+  const [globalStreak, setGlobalStreak] = useLocalStorage<number>('globalStreak', 0);
+  const [lastCompletionDate, setLastCompletionDate] = useLocalStorage<string>('lastCompletionDate', '');
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [showUserProfile, setShowUserProfile] = useState(false);
   
   const userName = "Alex";
-  const currentStreak = routines.reduce((max, routine) => Math.max(max, routine.streak), 0);
+  const currentStreak = globalStreak;
 
   // Initialize notifications
   useNotifications(routines);
 
+  // Calculate daily progress
+  const completedToday = routines.filter(r => r.completed).length;
+  const totalRoutines = routines.length;
+
+  // Update global streak when routines are completed
+  React.useEffect(() => {
+    const today = new Date().toDateString();
+    const hasCompletedRoutines = routines.some(r => r.completed);
+    
+    if (hasCompletedRoutines && lastCompletionDate !== today) {
+      // Check if yesterday was completed to maintain streak
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayString = yesterday.toDateString();
+      
+      if (lastCompletionDate === yesterdayString || globalStreak === 0) {
+        setGlobalStreak(globalStreak + 1);
+      } else {
+        setGlobalStreak(1); // Reset streak if gap
+      }
+      setLastCompletionDate(today);
+    }
+  }, [routines.map(r => r.completed).join(',')]);
   const handleCompleteRoutine = (id: string) => {
     setRoutines(routines.map(routine => {
       if (routine.id === id) {

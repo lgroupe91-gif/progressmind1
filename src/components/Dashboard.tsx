@@ -5,6 +5,7 @@ import { extendedRoutineTemplates, meditationGuides } from '../data/mockData';
 
 interface DashboardProps {
   routines: Routine[];
+  totalStreak: number;
   onCompleteRoutine: (id: string) => void;
   onUpdateRoutineInput: (id: string, inputValue: string) => void;
   onAddRoutine: (routine: Omit<Routine, 'id'>) => void;
@@ -14,6 +15,7 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ 
   routines, 
+  totalStreak,
   onCompleteRoutine, 
   onUpdateRoutineInput,
   onAddRoutine,
@@ -261,6 +263,16 @@ const Dashboard: React.FC<DashboardProps> = ({
   };
 
   const handleToggleRoutine = (routineId: string) => {
+    const routine = routines.find(r => r.id === routineId);
+    if (routine && !routine.completed) {
+      // Show success feedback
+      if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+        new Notification('Bien joué ! 🎉', {
+          body: `Tu as terminé: ${routine.title}`,
+          icon: '/icon-192.png'
+        });
+      }
+    }
     onCompleteRoutine(routineId);
   };
 
@@ -539,23 +551,37 @@ const Dashboard: React.FC<DashboardProps> = ({
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-4 rounded-xl shadow-md sm:col-span-2">
+        <div className="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-4 rounded-xl shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/80 text-xs">Citation du jour</p>
-              <p className="text-sm font-medium leading-relaxed">{getTodayQuote()}</p>
+              <p className="text-xs font-medium leading-relaxed">{getTodayQuote()}</p>
             </div>
             <Quote className="w-8 h-8 text-white/60 flex-shrink-0" />
           </div>
         </div>
 
+        <div className="bg-gradient-to-br from-green-400 to-green-600 text-white p-4 rounded-xl shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-white/80 text-xs">Progression du jour</p>
+              <p className="text-lg font-bold">{completedToday}/{routines.length}</p>
+              <p className="text-xs text-white/80">tâches complétées</p>
+            </div>
+            <CheckCircle className="w-8 h-8 text-white/60" />
+          </div>
+        </div>
         <div className="bg-gradient-to-br from-accent-400 to-accent-600 text-white p-4 rounded-xl shadow-md">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/80 text-xs">Terminées</p>
-              <p className="text-2xl font-bold">{completedToday}/{routines.length}</p>
+              <p className="text-white/80 text-xs">Série actuelle</p>
+              <p className="text-2xl font-bold flex items-center space-x-1">
+                <span>{totalStreak}</span>
+                {totalStreak > 0 && <span>🎉</span>}
+              </p>
+              <p className="text-xs text-white/80">jours consécutifs</p>
             </div>
-            <CheckCircle className="w-8 h-8 text-white/60" />
+            <Trophy className="w-8 h-8 text-white/60" />
           </div>
         </div>
       </div>
@@ -736,7 +762,12 @@ const Dashboard: React.FC<DashboardProps> = ({
               <div className="bg-orange-100 p-1.5 rounded-full">
                 <span className="text-lg">🌅</span>
               </div>
-              <h2 className="text-lg font-bold text-gray-800">Routines du Matin</h2>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-gray-800">Routines du Matin</h2>
+                <p className="text-sm text-gray-600">
+                  {morningRoutines.filter(r => r.completed).length}/{morningRoutines.length} tâches complétées
+                </p>
+              </div>
             </div>
             <div className="space-y-2">
               {morningRoutines.map(renderRoutineItem)}
@@ -751,7 +782,12 @@ const Dashboard: React.FC<DashboardProps> = ({
               <div className="bg-yellow-100 p-1.5 rounded-full">
                 <span className="text-lg">☀️</span>
               </div>
-              <h2 className="text-lg font-bold text-gray-800">Routines de l'Après-midi</h2>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-gray-800">Routines de l'Après-midi</h2>
+                <p className="text-sm text-gray-600">
+                  {afternoonRoutines.filter(r => r.completed).length}/{afternoonRoutines.length} tâches complétées
+                </p>
+              </div>
             </div>
             <div className="space-y-2">
               {afternoonRoutines.map(renderRoutineItem)}
@@ -766,7 +802,12 @@ const Dashboard: React.FC<DashboardProps> = ({
               <div className="bg-indigo-100 p-1.5 rounded-full">
                 <span className="text-lg">🌙</span>
               </div>
-              <h2 className="text-lg font-bold text-gray-800">Routines du Soir</h2>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-gray-800">Routines du Soir</h2>
+                <p className="text-sm text-gray-600">
+                  {eveningRoutines.filter(r => r.completed).length}/{eveningRoutines.length} tâches complétées
+                </p>
+              </div>
             </div>
             <div className="space-y-2">
               {eveningRoutines.map(renderRoutineItem)}
