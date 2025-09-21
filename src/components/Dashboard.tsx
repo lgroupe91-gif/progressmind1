@@ -104,7 +104,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   // Meditation timer effect
   React.useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
     if (meditationTimer.isRunning && meditationTimer.timeLeft > 0) {
       interval = setInterval(() => {
         setMeditationTimer(prev => ({

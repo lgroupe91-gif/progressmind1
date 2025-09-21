@@ -39,14 +39,14 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
   const [editGoal, setEditGoal] = useState({
     title: '',
     description: '',
-    category: 'personal' as const,
+    category: 'personal',
     specific: '',
     measurable: '',
     achievable: '',
     relevant: '',
     timeBound: '',
     progress: 0,
-    status: 'not_started' as const
+    status: 'not_started'
   });
   const [newRoutine, setNewRoutine] = useState({
     title: '',
