@@ -28,9 +28,19 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals }) => {
     const avgProgress = goals.length > 0 ? 
       goals.reduce((sum, g) => sum + g.progress, 0) / goals.length : 0;
 
-    // Routine completion stats
-    const gratitudeRoutines = routines.filter(r => r.title.includes('Gratitude')).length;
-    const manifestationRoutines = routines.filter(r => r.title.includes('Manifestation') || r.title.includes('Visualisation')).length;
+    // Routine type stats
+    const mindsetRoutines = routines.filter(r => 
+      r.title.toLowerCase().includes('gratitude') || 
+      r.title.toLowerCase().includes('manifestation') || 
+      r.title.toLowerCase().includes('visualisation') ||
+      r.title.toLowerCase().includes('affirmation')
+    ).length;
+    
+    const wellnessRoutines = routines.filter(r => 
+      r.title.toLowerCase().includes('méditation') || 
+      r.title.toLowerCase().includes('étirement') ||
+      r.title.toLowerCase().includes('yoga')
+    ).length;
 
     // Weekly progression
     const weeklyData = Array.from({ length: 7 }, (_, i) => {
@@ -55,8 +65,8 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals }) => {
       completedGoals,
       inProgressGoals,
       avgProgress,
-      gratitudeRoutines,
-      manifestationRoutines,
+      mindsetRoutines,
+      wellnessRoutines,
       weeklyData
     };
   }, [routines, goals]);
@@ -235,20 +245,20 @@ const StatsTab: React.FC<StatsTabProps> = ({ routines, goals }) => {
         </div>
 
         <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Routines spéciales</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Types de routines</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Gratitude</span>
-              <span className="font-bold text-pink-600">{stats.gratitudeRoutines}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">Manifestation</span>
-              <span className="font-bold text-purple-600">{stats.manifestationRoutines}</span>
-            </div>
-            <div className="flex items-center justify-between">
               <span className="text-gray-600">Mindset</span>
+              <span className="font-bold text-purple-600">{stats.mindsetRoutines}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">Bien-être</span>
+              <span className="font-bold text-green-600">{stats.wellnessRoutines}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">Actives</span>
               <span className="font-bold text-pink-600">
-                {stats.gratitudeRoutines + stats.manifestationRoutines > 0 ? '🔥' : '💤'}
+                {stats.mindsetRoutines + stats.wellnessRoutines > 0 ? '🔥' : '💤'}
               </span>
             </div>
           </div>
