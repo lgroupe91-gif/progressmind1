@@ -139,8 +139,8 @@ const CycleTab: React.FC = () => {
         <div className="bg-gradient-to-r from-pink-500 to-rose-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
           <Heart className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Mon Cycle</h2>
-        <p className="text-gray-600">Adapte tes routines selon ton cycle naturel</p>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Mon Cycle</h2>
+        <p className="text-gray-600 dark:text-gray-300">Adapte tes routines selon ton cycle naturel</p>
       </div>
 
       {/* Settings Button */}
@@ -159,7 +159,7 @@ const CycleTab: React.FC = () => {
 
       {/* Settings Form */}
       {showSettings && (
-        <div className="bg-white p-6 rounded-xl shadow-2xl border-2 border-pink-200">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl border-2 border-pink-200 dark:border-pink-600">
           <h3 className="text-lg font-semibold mb-4 flex items-center space-x-2">
             <Settings className="w-5 h-5 text-pink-500" />
             <span>Configuration du cycle</span>
@@ -167,7 +167,7 @@ const CycleTab: React.FC = () => {
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                 Date des dernières règles
               </label>
               <input
@@ -179,7 +179,7 @@ const CycleTab: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                 Durée du cycle (jours)
               </label>
               <input
@@ -190,7 +190,7 @@ const CycleTab: React.FC = () => {
                 onChange={(e) => setTempData({...tempData, cycleLength: parseInt(e.target.value) || 28})}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               />
-              <p className="text-sm text-gray-500 mt-1">Généralement entre 21 et 35 jours</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Généralement entre 21 et 35 jours</p>
             </div>
 
             <div className="flex space-x-3">
@@ -226,41 +226,41 @@ const CycleTab: React.FC = () => {
           </div>
 
           {/* Quote Card */}
-          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700">
             <div className="flex items-center space-x-3 mb-4">
               <Quote className="w-6 h-6 text-pink-500" />
-              <h4 className="text-lg font-semibold text-gray-800">Citation du jour</h4>
+              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Citation du jour</h4>
             </div>
-            <blockquote className="text-gray-700 text-lg italic text-center">
+            <blockquote className="text-gray-700 dark:text-gray-300 text-lg italic text-center">
               "{phaseInfo.quote}"
             </blockquote>
           </div>
 
           {/* Adjustments Card */}
-          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700">
             <div className="flex items-center space-x-3 mb-4">
               <Lightbulb className="w-6 h-6 text-yellow-500" />
-              <h4 className="text-lg font-semibold text-gray-800">Ajustements recommandés</h4>
+              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Ajustements recommandés</h4>
             </div>
             <div className="space-y-2">
               {phaseInfo.adjustments.map((adjustment, index) => (
                 <div key={index} className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-pink-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-700">{adjustment}</p>
+                  <p className="text-gray-700 dark:text-gray-300">{adjustment}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Cycle Progress */}
-          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700">
             <div className="flex items-center space-x-3 mb-4">
               <Calendar className="w-6 h-6 text-blue-500" />
-              <h4 className="text-lg font-semibold text-gray-800">Progression du cycle</h4>
+              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Progression du cycle</h4>
             </div>
             
             <div className="space-y-3">
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300">
                 <span>Jour {phaseInfo.dayOfCycle}</span>
                 <span>{cycleData.cycleLength} jours</span>
               </div>
@@ -270,26 +270,26 @@ const CycleTab: React.FC = () => {
                   style={{ width: `${(phaseInfo.dayOfCycle / cycleData.cycleLength) * 100}%` }}
                 ></div>
               </div>
-              <div className="text-center text-sm text-gray-600">
+              <div className="text-center text-sm text-gray-600 dark:text-gray-300">
                 {Math.round((phaseInfo.dayOfCycle / cycleData.cycleLength) * 100)}% du cycle
               </div>
             </div>
           </div>
 
           {/* Next Phases Preview */}
-          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4">Prochaines phases</h4>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700">
+            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Prochaines phases</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(['menstruation', 'folliculaire', 'ovulation', 'lutéale'] as CyclePhase[])
                 .filter(phase => phase !== phaseInfo.phase)
                 .slice(0, 2)
                 .map((phase) => (
-                  <div key={phase} className="p-4 bg-gray-50 rounded-lg">
+                  <div key={phase} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
                       <span className="text-2xl">{getPhaseEmoji(phase)}</span>
-                      <span className="font-medium text-gray-800">{getPhaseName(phase)}</span>
+                      <span className="font-medium text-gray-800 dark:text-gray-100">{getPhaseName(phase)}</span>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       {getPhaseAdjustments(phase)[0]}
                     </p>
                   </div>
@@ -306,7 +306,7 @@ const CycleTab: React.FC = () => {
           <h3 className="text-lg font-medium text-gray-600 mb-2">
             Configure ton cycle pour commencer
           </h3>
-          <p className="text-gray-500 mb-4">
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
             Renseigne la date de tes dernières règles pour adapter tes routines à ton cycle naturel
           </p>
         </div>
