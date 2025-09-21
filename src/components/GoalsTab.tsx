@@ -158,6 +158,8 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
         isProgressive: false,
         isGoalLinked: true,
         linkedGoalId: goalId,
+        notificationsEnabled: false,
+        scheduledTime: '',
         encouragementMessage: newRoutine.encouragementMessage || 'Bravo ! Tu te rapproches de ton objectif !',
         progressionSteps: [
           { week: 1, duration: newRoutine.duration, description: newRoutine.description }

@@ -377,6 +377,9 @@ export const initialRoutines: Routine[] = [
     color: 'bg-green-500',
     icon: '🧘',
     isProgressive: true,
+    frequency: 'daily',
+    scheduledTime: '',
+    notificationsEnabled: false,
     progressionSteps: [
       { week: 1, duration: 5, description: '5 minutes de méditation guidée - Respiration simple' },
       { week: 4, duration: 10, description: '10 minutes de méditation - Pleine conscience' },
@@ -397,6 +400,9 @@ export const initialRoutines: Routine[] = [
     color: 'bg-green-600',
     icon: '🚶',
     isProgressive: true,
+    frequency: 'daily',
+    scheduledTime: '',
+    notificationsEnabled: false,
     progressionSteps: [
       { week: 1, duration: 10, description: '10 minutes de marche tranquille' },
       { week: 3, duration: 20, description: '20 minutes de marche active' },
@@ -416,6 +422,9 @@ export const initialRoutines: Routine[] = [
     color: 'bg-blue-600',
     icon: '📅',
     isProgressive: false,
+    frequency: 'daily',
+    scheduledTime: '',
+    notificationsEnabled: false,
     progressionSteps: [
       { week: 1, duration: 10, description: '10 minutes de planification' }
     ]

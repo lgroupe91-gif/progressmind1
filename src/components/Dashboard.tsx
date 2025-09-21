@@ -224,6 +224,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       icon: template.icon,
       isProgressive: template.isProgressive,
       progressionSteps: template.progressionSteps,
+      frequency: 'daily',
       scheduledTime: '',
       notificationsEnabled: false
     });
@@ -239,6 +240,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       week: 1,
       maxWeeks: 1,
       isProgressive: false,
+      frequency: 'daily',
       progressionSteps: [
         { week: 1, duration: customRoutine.duration, description: customRoutine.description }
       ],
