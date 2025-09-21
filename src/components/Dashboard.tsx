@@ -333,6 +333,13 @@ const Dashboard: React.FC<DashboardProps> = ({
                   <Edit3 className="w-4 h-4" />
                 </button>
               )}
+              <button
+                onClick={() => onDeleteRoutine(routine.id)}
+                className="text-gray-400 hover:text-red-500 transition-colors"
+                title="Supprimer cette routine"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
             </div>
             <p className="text-sm text-gray-600 mt-1">{routine.description}</p>
             
