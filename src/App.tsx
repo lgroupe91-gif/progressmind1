@@ -4,6 +4,7 @@ import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
 import GoalsTab from './components/GoalsTab';
 import NotesTab from './components/NotesTab';
+import CycleTab from './components/CycleTab';
 import CalendarTab from './components/CalendarTab';
 import StatsTab from './components/StatsTab';
 import NotificationSettings from './components/NotificationSettings';
@@ -227,6 +228,8 @@ function App() {
             onDeleteNote={handleDeleteNote}
           />
         );
+      case 'cycle':
+        return <CycleTab />;
       case 'calendar':
         return <CalendarTab routines={routines} />;
       case 'stats':

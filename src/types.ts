@@ -103,3 +103,18 @@ export interface Goal {
   createdAt: string;
   targetDate: string;
 }
+
+export interface CycleData {
+  lastPeriodDate: string;
+  cycleLength: number;
+}
+
+export type CyclePhase = 'menstruation' | 'folliculaire' | 'ovulation' | 'lutéale';
+
+export interface PhaseInfo {
+  phase: CyclePhase;
+  dayOfCycle: number;
+  advice: string;
+  quote: string;
+  adjustments: string[];
+}
