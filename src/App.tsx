@@ -153,6 +153,9 @@ function App() {
             routines={routines} 
             onCompleteRoutine={handleCompleteRoutine}
             onUpdateRoutineInput={handleUpdateRoutineInput}
+            onAddRoutine={handleAddRoutine}
+            onEditRoutine={handleEditRoutine}
+            onDeleteRoutine={handleDeleteRoutine}
           />
         );
       case 'goals':
