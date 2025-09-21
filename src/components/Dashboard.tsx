@@ -93,7 +93,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   // Obtenir la citation du jour basée sur la date
   const getTodayQuote = () => {
     const today = new Date();
-    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
     return dailyQuotes[dayOfYear % dailyQuotes.length];
   };
   const categories = {

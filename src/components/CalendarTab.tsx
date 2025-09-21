@@ -199,7 +199,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({ routines }) => {
               const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
               
               let perfectDays = 0;
-              for (let d = new Date(firstDay); d <= Math.min(lastDay, today); d.setDate(d.getDate() + 1)) {
+              for (let d = new Date(firstDay); d.getTime() <= Math.min(lastDay.getTime(), today.getTime()); d.setDate(d.getDate() + 1)) {
                 const { completed, total } = getCompletionRate(d.getDate());
                 if (completed === total && total > 0) {
                   perfectDays++;
