@@ -696,6 +696,10 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
           <p className="text-gray-500 mb-4">
             {activeTimeframe === '5years' 
               ? 'Commence par définir ta vision à 5 ans avec un objectif SMART'
+              : activeTimeframe === '1year'
+              ? 'Définis tes objectifs annuels avec la méthode SMART'
+              : activeTimeframe === '1week'
+              ? 'Crée des actions concrètes pour cette semaine'
               : 'Crée tes objectifs à ' + timeframes[activeTimeframe].label + ' pour structurer ton parcours'
             }
           </p>
