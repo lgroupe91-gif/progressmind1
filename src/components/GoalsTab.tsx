@@ -28,7 +28,7 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
   const [newGoal, setNewGoal] = useState({
     title: '',
     description: '',
-    category: 'personal' as const,
+    category: 'personal' as Goal['category'],
     specific: '',
     measurable: '',
     achievable: '',
@@ -39,14 +39,14 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
   const [editGoal, setEditGoal] = useState({
     title: '',
     description: '',
-    category: 'personal',
+    category: 'personal' as Goal['category'],
     specific: '',
     measurable: '',
     achievable: '',
     relevant: '',
     timeBound: '',
     progress: 0,
-    status: 'not_started'
+    status: 'not_started' as Goal['status']
   });
   const [newRoutine, setNewRoutine] = useState({
     title: '',
