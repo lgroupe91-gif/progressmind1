@@ -279,56 +279,135 @@ const NotesTab: React.FC<NotesTabProps> = ({
               
               return (
                 <div key={note.id} className="bg-white p-6 rounded-xl shadow-xl border-2 border-gray-200">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="font-semibold text-gray-800 text-lg">{note.title}</h3>
-                      <p className="text-sm text-gray-500">
-                        {completedCount}/{todos.length} terminées
-                      </p>
-                    </div>
-                    <div className="flex space-x-1">
-                      <button
-                        onClick={() => handleEditNote(note)}
-                        className="text-gray-400 hover:text-amber-500 transition-colors"
-                      >
-                        <Edit3 className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => onDeleteNote(note.id)}
-                        className="text-gray-400 hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    {todos.map((todo, index) => (
-                      <div key={index} className="flex items-center space-x-3">
+                  {editingNote === note.id ? (
+                    <div className="space-y-3 mb-4">
+                      <input
+                        type="text"
+                        value={editContent.title}
+                        onChange={(e) => setEditContent({ ...editContent, title: e.target.value })}
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      />
+                      <textarea
+                        value={editContent.content}
+                        onChange={(e) => setEditContent({ ...editContent, content: e.target.value })}
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                        rows={6}
+                        placeholder="• Tâche 1&#10;• Tâche 2&#10;• Tâche 3"
+                      />
+                      <div className="flex space-x-2">
                         <button
-                          onClick={() => toggleTodoItem(note.id, index)}
-                          className={`transition-colors ${
-                            todo.completed ? 'text-green-500' : 'text-gray-400 hover:text-green-500'
-                          }`}
+                          onClick={handleSaveEdit}
+                          className="bg-green-500 hover:bg-green-600 text-white p-2 rounded"
                         >
-                          {todo.completed ? <CheckSquare className="w-5 h-5" /> : <Square className="w-5 h-5" />}
+                          <Check className="w-4 h-4" />
                         </button>
-                        <span className={`flex-1 ${
-                          todo.completed ? 'line-through text-gray-500' : 'text-gray-700'
-                        }`}>
-                          {todo.text}
-                        </span>
+                        <button
+                          onClick={handleCancelEdit}
+                          className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="font-semibold text-gray-800 text-lg">{note.title}</h3>
+                        <p className="text-sm text-gray-500">
+                          {completedCount}/{todos.length} terminées
+                        </p>
+                      </div>
+                      <div className="flex space-x-1">
+                        <button
+                          onClick={() => handleEditNote(note)}
+                          className="text-gray-400 hover:text-amber-500 transition-colors"
+                        >
+                          <Edit3 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => onDeleteNote(note.id)}
+                          className="text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   
-                  {/* Progress Bar */}
-                  <div className="mt-4">
-                    <div className="bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${todos.length > 0 ? (completedCount / todos.length) * 100 : 0}%` }}
-                      ></div>
+                  {editingNote !== note.id && (
+                    <div className="space-y-2">
+                      {todos.map((todo, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <button
+                            onClick={() => toggleTodoItem(note.id, index)}
+                            className={`transition-colors ${
+                              todo.completed ? 'text-green-500' : 'text-gray-400 hover:text-green-500'
+                            }`}
+                          >
+                            {todo.completed ? <CheckSquare className="w-5 h-5" /> : <Square className="w-5 h-5" />}
+                          </button>
+                          <span className={`flex-1 ${
+                            todo.completed ? 'line-through text-gray-500' : 'text-gray-700'
+                          }`}>
+                            {todo.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {editingNote !== note.id && (
+                    <>
+                      {/* Progress Bar */}
+                      <div className="mt-4">
+                        <div className="bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${todos.length > 0 ? (completedCount / todos.length) * 100 : 0}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                      
+                      <div className="text-xs text-gray-400 mt-3">
+                        Modifiée le {new Date(note.updatedAt).toLocaleDateString('fr-FR', {
+                          day: 'numeric',
+                          month: 'short',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Empty State */}
+      {((activeTab === 'notes' && regularNotes.length === 0) || 
+        (activeTab === 'todos' && todoNotes.length === 0)) && (
+        <div className="text-center py-12">
+          <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <StickyNote className="w-8 h-8 text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-600 mb-2">
+            {activeTab === 'todos' ? 'Aucune to-do list' : 'Aucune note'}
+          </h3>
+          <p className="text-gray-500 mb-4">
+            {activeTab === 'todos' 
+              ? 'Crée ta première liste de tâches pour t\'organiser'
+              : 'Commence à capturer tes pensées et idées'
+            }
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default NotesTab;
                     </div>
                   </div>
                   

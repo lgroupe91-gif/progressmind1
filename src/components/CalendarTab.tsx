@@ -35,6 +35,10 @@ const CalendarTab: React.FC<CalendarTabProps> = ({ routines }) => {
   };
 
   const getCompletionRate = (day: number) => {
+    if (routines.length === 0) {
+      return { completed: 0, total: 0 };
+    }
+    
     // Simulation plus réaliste basée sur la date
     const today = new Date();
     const currentDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
@@ -87,7 +91,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({ routines }) => {
           </div>
           
           {/* Progress indicators - only show for past and current days */}
-          {new Date(currentDate.getFullYear(), currentDate.getMonth(), day) <= new Date() && (
+          {new Date(currentDate.getFullYear(), currentDate.getMonth(), day) <= new Date() && total > 0 && (
             <div className="space-y-1">
               <div className="flex space-x-1 flex-wrap">
                 {Array.from({ length: Math.min(total, 6) }, (_, i) => (
@@ -113,7 +117,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({ routines }) => {
           )}
           
           <div className="absolute bottom-1 right-1">
-            {new Date(currentDate.getFullYear(), currentDate.getMonth(), day) <= new Date() && (
+            {new Date(currentDate.getFullYear(), currentDate.getMonth(), day) <= new Date() && total > 0 && (
               <span className="text-xs text-gray-500">{completed}/{total}</span>
             )}
           </div>
@@ -189,6 +193,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({ routines }) => {
           <h4 className="font-semibold text-gray-800 mb-1">Jours parfaits</h4>
           <p className="text-2xl font-bold text-green-600">
             {(() => {
+              if (routines.length === 0) return 0;
               const today = new Date();
               const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
               const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
