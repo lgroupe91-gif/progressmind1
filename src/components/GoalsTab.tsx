@@ -179,11 +179,11 @@ const GoalsTab: React.FC<GoalsTabProps> = ({
 
   const createChildGoal = (parentGoal: Goal) => {
     const childTimeframes = {
-      '5years': '1year',
-      '1year': '3months',
-      '3months': '1week',
+      '5years': '1year' as const,
+      '1year': '3months' as const,
+      '3months': '1week' as const,
       '1week': null
-    } as const;
+    };
 
     const childTimeframe = childTimeframes[parentGoal.timeframe];
     if (!childTimeframe) return;

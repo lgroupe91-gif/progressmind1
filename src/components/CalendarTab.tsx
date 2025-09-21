@@ -50,7 +50,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({ routines }) => {
     
     // Simulation plus réaliste basée sur la date et les routines actuelles
     const daysSinceEpoch = Math.floor(currentDay.getTime() / (1000 * 60 * 60 * 24));
-    const completionRate = 0.6 + (Math.sin(daysSinceEpoch * 0.1) * 0.3); // Entre 30% et 90%
+    const completionRate = Math.max(0.3, Math.min(0.9, 0.6 + (Math.sin(daysSinceEpoch * 0.1) * 0.3))); // Entre 30% et 90%
     const completedRoutines = Math.floor(routines.length * Math.max(0, Math.min(1, completionRate)));
     const totalRoutines = routines.length;
     

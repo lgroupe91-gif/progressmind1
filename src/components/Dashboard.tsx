@@ -214,7 +214,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     onAddRoutine({
       title: template.title,
       description: currentStep.description,
-      category: category,
+      category,
       duration: currentStep.duration,
       completed: false,
       streak: 0,
@@ -223,7 +223,9 @@ const Dashboard: React.FC<DashboardProps> = ({
       color: template.color,
       icon: template.icon,
       isProgressive: template.isProgressive,
-      progressionSteps: template.progressionSteps
+      progressionSteps: template.progressionSteps,
+      scheduledTime: '',
+      notificationsEnabled: false
     });
     setShowTemplates(false);
   };
