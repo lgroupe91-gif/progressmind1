@@ -55,7 +55,6 @@ const Dashboard: React.FC<DashboardProps> = ({
   const eveningRoutines = routines.filter(r => r.category === 'evening');
   
   const completedToday = routines.filter(r => r.completed).length;
-  const totalStreak = routines.reduce((sum, r) => sum + r.streak, 0);
 
   // Citations du jour - une différente chaque jour
   const dailyQuotes = [
