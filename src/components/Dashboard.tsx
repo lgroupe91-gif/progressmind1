@@ -24,7 +24,6 @@ const Dashboard: React.FC<DashboardProps> = ({
   const [inputValue, setInputValue] = React.useState('');
   const [showTemplates, setShowTemplates] = React.useState(false);
   const [showCustomForm, setShowCustomForm] = React.useState(false);
-  const [selectedCategory, setSelectedCategory] = React.useState<'morning' | 'afternoon' | 'evening'>('morning');
   const [customRoutine, setCustomRoutine] = React.useState({
     title: '',
     description: '',
@@ -202,12 +201,12 @@ const Dashboard: React.FC<DashboardProps> = ({
     'Je ressens la fierté d\'avoir accompli mon rêve'
   ];
 
-  const handleAddTemplate = (template: RoutineTemplate) => {
+  const handleAddTemplate = (template: RoutineTemplate, category: 'morning' | 'afternoon' | 'evening') => {
     const currentStep = template.progressionSteps[0];
     onAddRoutine({
       title: template.title,
       description: currentStep.description,
-      category: selectedCategory, // Utilise la catégorie sélectionnée au lieu de celle du template
+      category: category,
       duration: currentStep.duration,
       completed: false,
       streak: 0,
@@ -558,24 +557,6 @@ const Dashboard: React.FC<DashboardProps> = ({
         <div className="bg-white p-6 rounded-xl shadow-lg border border-purple-100 mb-6">
           <h3 className="text-lg font-semibold mb-4">Choisir une routine</h3>
           
-          {/* Category Tabs */}
-          <div className="flex space-x-1 mb-4 overflow-x-auto">
-            {Object.entries(categories).map(([key, cat]) => (
-              <button
-                key={key}
-                onClick={() => setSelectedCategory(key as any)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
-                  selectedCategory === key
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-purple-50'
-                }`}
-              >
-                <span className="mr-2">{cat.icon}</span>
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
           {/* Template Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {extendedRoutineTemplates
@@ -598,12 +579,25 @@ const Dashboard: React.FC<DashboardProps> = ({
                       Commence par {template.progressionSteps[0].duration} min, évolue jusqu'à {template.progressionSteps[template.progressionSteps.length - 1].duration} min
                     </div>
                   )}
-                  <button
-                    onClick={() => handleAddTemplate(template)}
-                    className={`w-full text-white py-2 rounded-lg text-sm transition-colors bg-gradient-to-r ${categories[selectedCategory].color}`}
-                  >
-                    Ajouter au {categories[selectedCategory].label.toLowerCase()}
-                  </button>
+                  
+                  {/* Category Selection for each template */}
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-gray-700 mb-2">Ajouter à :</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {Object.entries(categories).map(([key, cat]) => (
+                        <button
+                          key={key}
+                          onClick={() => handleAddTemplate(template, key as any)}
+                          className={`text-white py-2 px-3 rounded-lg text-xs transition-colors bg-gradient-to-r ${cat.color} hover:opacity-90`}
+                        >
+                          <div className="flex flex-col items-center space-y-1">
+                            <span>{cat.icon}</span>
+                            <span>{cat.label}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               ))}
           </div>
