@@ -38,6 +38,7 @@ function App() {
 
   // Update global streak when routines are completed
   React.useEffect(() => {
+    try {
     const today = new Date().toDateString();
     const hasCompletedRoutines = routines.some(r => r.completed);
     
@@ -218,6 +219,9 @@ function App() {
     resetDaily();
     const interval = setInterval(resetDaily, 60000); // Check every minute
     return () => clearInterval(interval);
+    } catch (error) {
+      console.error('Error updating global streak:', error);
+    }
   }, []);
 
   const renderActiveTab = () => {
@@ -258,6 +262,7 @@ function App() {
         return <CycleTab />;
       case 'calendar':
         return <CalendarTab routines={routines} />;
+    try {
       case 'stats':
         return (
           <StatsTab 
@@ -277,6 +282,9 @@ function App() {
             onDeleteRoutine={handleDeleteRoutine}
           />
         );
+    }
+    } catch (error) {
+      console.error('Error completing routine:', error);
     }
   };
 

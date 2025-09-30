@@ -102,40 +102,50 @@ const CycleTab: React.FC = () => {
   const calculatePhaseInfo = (lastPeriodDate: string, cycleLength: number): PhaseInfo | null => {
     if (!lastPeriodDate) return null;
 
-    const lastPeriod = new Date(lastPeriodDate);
-    const today = new Date();
-    const daysSinceLastPeriod = Math.floor((today.getTime() - lastPeriod.getTime()) / (1000 * 60 * 60 * 24));
-    const dayOfCycle = (daysSinceLastPeriod % cycleLength) + 1;
+    try {
+      const lastPeriod = new Date(lastPeriodDate);
+      if (isNaN(lastPeriod.getTime())) return null;
+      
+      const today = new Date();
+      const daysSinceLastPeriod = Math.floor((today.getTime() - lastPeriod.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysSinceLastPeriod < 0) return null;
+      
+      const dayOfCycle = (daysSinceLastPeriod % cycleLength) + 1;
 
-    let phase: CyclePhase;
-    let advice: string;
-    let quote: string;
+      let phase: CyclePhase;
+      let advice: string;
+      let quote: string;
 
-    if (dayOfCycle <= 5) {
-      phase = 'menstruation';
-      advice = 'Période de repos et de régénération. Écoute ton corps et sois douce avec toi-même.';
-      quote = 'Ralentis pour mieux repartir.';
-    } else if (dayOfCycle <= Math.floor(cycleLength * 0.5)) {
-      phase = 'folliculaire';
-      advice = 'Énergie croissante et motivation. C\'est le moment parfait pour commencer de nouveaux projets.';
-      quote = 'Énergie montante — lance les nouvelles habitudes.';
-    } else if (dayOfCycle <= Math.floor(cycleLength * 0.6)) {
-      phase = 'ovulation';
-      advice = 'Pic d\'énergie et de confiance. Profite de cette période pour les tâches importantes et sociales.';
-      quote = 'Visibilité & confiance — vise les tâches sociales/difficiles.';
-    } else {
-      phase = 'lutéale';
-      advice = 'Période de consolidation. Focus sur l\'organisation et la préparation du cycle suivant.';
-      quote = 'Organisation & douceur — consolide, simplifie.';
+      if (dayOfCycle <= 5) {
+        phase = 'menstruation';
+        advice = 'Période de repos et de régénération. Écoute ton corps et sois douce avec toi-même.';
+        quote = 'Ralentis pour mieux repartir.';
+      } else if (dayOfCycle <= Math.floor(cycleLength * 0.5)) {
+        phase = 'folliculaire';
+        advice = 'Énergie croissante et motivation. C\'est le moment parfait pour commencer de nouveaux projets.';
+        quote = 'Énergie montante — lance les nouvelles habitudes.';
+      } else if (dayOfCycle <= Math.floor(cycleLength * 0.6)) {
+        phase = 'ovulation';
+        advice = 'Pic d\'énergie et de confiance. Profite de cette période pour les tâches importantes et sociales.';
+        quote = 'Visibilité & confiance — vise les tâches sociales/difficiles.';
+      } else {
+        phase = 'lutéale';
+        advice = 'Période de consolidation. Focus sur l\'organisation et la préparation du cycle suivant.';
+        quote = 'Organisation & douceur — consolide, simplifie.';
+      }
+
+      return {
+        phase,
+        dayOfCycle,
+        advice,
+        quote,
+        adjustments: getPhaseAdjustments(phase)
+      };
+    } catch (error) {
+      console.error('Error calculating phase info:', error);
+      return null;
     }
-
-    return {
-      phase,
-      dayOfCycle,
-      advice,
-      quote,
-      adjustments: getPhaseAdjustments(phase)
-    };
   };
 
   const phaseInfo = useMemo(() => {

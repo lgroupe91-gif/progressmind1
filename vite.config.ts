@@ -11,14 +11,20 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     minify: 'esbuild',
+    target: 'es2015',
+    cssTarget: 'chrome61',
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
           icons: ['lucide-react']
-        }
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
-    }
+    },
+    assetsInlineLimit: 4096
   },
   plugins: [
     react()
@@ -26,5 +32,8 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
     include: ['react', 'react-dom']
+  },
+  define: {
+    global: 'globalThis'
   }
 });

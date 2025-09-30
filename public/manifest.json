@@ -8,6 +8,7 @@
   "theme_color": "#7c3aed",
   "orientation": "portrait-primary",
   "scope": "/",
+  "id": "com.routinemind.app",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -25,5 +26,21 @@
   "categories": ["productivity", "lifestyle", "health"],
   "lang": "fr",
   "dir": "ltr",
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Routines du jour",
+      "short_name": "Routines",
+      "description": "Voir mes routines quotidiennes",
+      "url": "/?tab=dashboard",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mes objectifs",
+      "short_name": "Objectifs",
+      "description": "Gérer mes objectifs",
+      "url": "/?tab=goals",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }
