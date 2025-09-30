@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Quote, Trophy, Flame, Check, Edit3, Target, Plus, Play, Volume2, TrendingUp, Trash2 } from 'lucide-react';
+import { CheckCircle, Quote, Trophy, Flame, Check, CreditCard as Edit3, Target, Plus, Play, Volume2, TrendingUp, Trash2 } from 'lucide-react';
 import { Routine, RoutineTemplate } from '../types';
 import { extendedRoutineTemplates, meditationGuides } from '../data/mockData';
 
