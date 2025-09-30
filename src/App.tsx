@@ -39,22 +39,22 @@ function App() {
   // Update global streak when routines are completed
   React.useEffect(() => {
     try {
-    const today = new Date().toDateString();
-    const hasCompletedRoutines = routines.some(r => r.completed);
-    
-    if (hasCompletedRoutines && lastCompletionDate !== today) {
-      // Check if yesterday was completed to maintain streak
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayString = yesterday.toDateString();
+      const today = new Date().toDateString();
+      const hasCompletedRoutines = routines.some(r => r.completed);
       
-      if (lastCompletionDate === yesterdayString || globalStreak === 0) {
-        setGlobalStreak(globalStreak + 1);
-      } else {
-        setGlobalStreak(1); // Reset streak if gap
+      if (hasCompletedRoutines && lastCompletionDate !== today) {
+        // Check if yesterday was completed to maintain streak
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayString = yesterday.toDateString();
+        
+        if (lastCompletionDate === yesterdayString || globalStreak === 0) {
+          setGlobalStreak(globalStreak + 1);
+        } else {
+          setGlobalStreak(1); // Reset streak if gap
+        }
+        setLastCompletionDate(today);
       }
-      setLastCompletionDate(today);
-    }
     } catch (error) {
       console.error('Error updating global streak:', error);
     }
