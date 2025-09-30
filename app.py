@@ -74,13 +74,13 @@ class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 ProgressMind</h1>
+            <h1>🚀 RoutineMind</h1>
             <p style="font-size: 1.2em;">Application de Développement Personnel</p>
         </div>
         
         <div class="success">
             <h2>✅ SERVEUR PYTHON FONCTIONNEL !</h2>
-            <p style="font-size: 1.1em;">L'application ProgressMind est maintenant accessible</p>
+            <p style="font-size: 1.1em;">L'application RoutineMind est maintenant accessible</p>
             <p><strong>Port: 8080 | Serveur: Python HTTP</strong></p>
         </div>
         

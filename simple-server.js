@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>ProgressMind - Test</title>
+      <title>RoutineMind - Test</title>
       <style>
         body { 
           font-family: Arial, sans-serif; 
@@ -34,7 +34,7 @@ const server = http.createServer((req, res) => {
     </head>
     <body>
       <div class="container">
-        <h1>🚀 ProgressMind</h1>
+        <h1>🚀 RoutineMind</h1>
         <p class="success">✅ SERVEUR FONCTIONNEL SUR PORT 3000 !</p>
         <p>Si tu vois cette page, le serveur marche parfaitement !</p>
         <p>🎯 Application de développement personnel</p>
