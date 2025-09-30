@@ -3,24 +3,32 @@ import { Routine } from '../types';
 
 export const useNotifications = (routines: Routine[]) => {
   const scheduleNotification = useCallback((title: string, body: string, delay: number) => {
-    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted' && delay >= 0) {
       setTimeout(() => {
-        new Notification(title, {
-          body,
-          icon: '/icon-192.png',
-          badge: '/icon-192.png',
-          tag: 'routine-reminder'
-        });
+        try {
+          new Notification(title, {
+            body,
+            icon: '/icon-192.png',
+            badge: '/icon-192.png',
+            tag: 'routine-reminder'
+          });
+        } catch (error) {
+          console.warn('Notification failed:', error);
+        }
       }, delay);
     }
   }, []);
 
   const scheduleRoutineReminders = useCallback(() => {
+    if (!routines || routines.length === 0) return;
+    
     const now = new Date();
     
     routines.forEach(routine => {
-      if (routine.scheduledTime && routine.notificationsEnabled && !routine.completed) {
+      if (routine?.scheduledTime && routine?.notificationsEnabled && !routine?.completed) {
         const [hours, minutes] = routine.scheduledTime.split(':').map(Number);
+        if (isNaN(hours) || isNaN(minutes)) return;
+        
         const scheduledTime = new Date();
         scheduledTime.setHours(hours, minutes, 0, 0);
         
@@ -70,7 +78,11 @@ export const useNotifications = (routines: Routine[]) => {
   }, [scheduleNotification]);
 
   useEffect(() => {
-    scheduleRoutineReminders();
+    try {
+      scheduleRoutineReminders();
+    } catch (error) {
+      console.warn('Failed to schedule routine reminders:', error);
+    }
     
     // Notification motivationnelle quotidienne à 9h
     const now = new Date();
@@ -82,7 +94,9 @@ export const useNotifications = (routines: Routine[]) => {
     }
     
     const motivationDelay = motivationTime.getTime() - now.getTime();
-    setTimeout(sendMotivationalNotification, motivationDelay);
+    if (motivationDelay > 0 && motivationDelay <= 24 * 60 * 60 * 1000) {
+      setTimeout(sendMotivationalNotification, motivationDelay);
+    }
     
   }, [scheduleRoutineReminders, sendMotivationalNotification]);
 

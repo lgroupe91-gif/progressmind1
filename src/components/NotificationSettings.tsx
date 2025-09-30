@@ -16,28 +16,36 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({ onClose }) 
   }, []);
 
   const requestNotificationPermission = async () => {
-    if ('Notification' in window) {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
       const result = await Notification.requestPermission();
       setPermission(result);
       if (result === 'granted') {
         setNotificationsEnabled(true);
         // Test notification
-        new Notification('RoutineMind', {
-          body: 'Les notifications sont maintenant activées !',
-          icon: '/icon-192.png'
-        });
+        try {
+          new Notification('RoutineMind', {
+            body: 'Les notifications sont maintenant activées !',
+            icon: '/icon-192.png'
+          });
+        } catch (error) {
+          console.warn('Test notification failed:', error);
+        }
       }
     }
   };
 
   const scheduleNotification = (title: string, body: string, delay: number) => {
-    if (permission === 'granted') {
+    if (permission === 'granted' && delay >= 0) {
       setTimeout(() => {
-        new Notification(title, {
-          body,
-          icon: '/icon-192.png',
-          badge: '/icon-192.png'
-        });
+        try {
+          new Notification(title, {
+            body,
+            icon: '/icon-192.png',
+            badge: '/icon-192.png'
+          });
+        } catch (error) {
+          console.warn('Notification failed:', error);
+        }
       }, delay);
     }
   };
