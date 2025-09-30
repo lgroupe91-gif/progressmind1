@@ -1,6 +1,6 @@
 {
-  "appId": "com.progressmind.app",
-  "appName": "ProgressMind",
+  "appId": "com.routinemind.app",
+  "appName": "RoutineMind",
   "webDir": "dist",
   "bundledWebRuntime": false
 }

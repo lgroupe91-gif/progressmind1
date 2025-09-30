@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ userName, currentStreak, onOpenNotifica
             <Rocket className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-lg font-bold">ProgressMind</h1>
+            <h1 className="text-lg font-bold">RoutineMind</h1>
             <p className="text-xs text-white/80 hidden sm:block">De petites actions pour de grands objectifs</p>
           </div>
         </div>

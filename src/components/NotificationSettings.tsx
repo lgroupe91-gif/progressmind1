@@ -22,7 +22,7 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({ onClose }) 
       if (result === 'granted') {
         setNotificationsEnabled(true);
         // Test notification
-        new Notification('ProgressMind', {
+        new Notification('RoutineMind', {
           body: 'Les notifications sont maintenant activées !',
           icon: '/icon-192.png'
         });

@@ -63,7 +63,7 @@ export const useNotifications = (routines: Routine[]) => {
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
     
     scheduleNotification(
-      "ProgressMind - Motivation",
+      "RoutineMind - Motivation",
       randomMessage,
       0
     );

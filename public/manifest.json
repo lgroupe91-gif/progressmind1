@@ -1,6 +1,6 @@
 {
-  "name": "ProgressMind",
-  "short_name": "ProgressMind",
+  "name": "RoutineMind",
+  "short_name": "RoutineMind",
   "description": "De petites actions pour de grands objectifs",
   "start_url": "/",
   "display": "standalone",
