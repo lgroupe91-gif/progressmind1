@@ -55,8 +55,13 @@ function App() {
       }
       setLastCompletionDate(today);
     }
+    } catch (error) {
+      console.error('Error updating global streak:', error);
+    }
   }, [routines.map(r => r.completed).join(',')]);
+
   const handleCompleteRoutine = (id: string) => {
+    try {
     setRoutines(routines.map(routine => {
       if (routine.id === id) {
         if (routine.completed) {
@@ -77,6 +82,9 @@ function App() {
       }
       return routine;
     }));
+    } catch (error) {
+      console.error('Error completing routine:', error);
+    }
   };
 
   const handleUpdateRoutineInput = (id: string, inputValue: string) => {
@@ -219,12 +227,10 @@ function App() {
     resetDaily();
     const interval = setInterval(resetDaily, 60000); // Check every minute
     return () => clearInterval(interval);
-    } catch (error) {
-      console.error('Error updating global streak:', error);
-    }
   }, []);
 
   const renderActiveTab = () => {
+    try {
     switch (activeTab) {
       case 'dashboard':
         return (
@@ -262,7 +268,6 @@ function App() {
         return <CycleTab />;
       case 'calendar':
         return <CalendarTab routines={routines} />;
-    try {
       case 'stats':
         return (
           <StatsTab 
@@ -284,7 +289,7 @@ function App() {
         );
     }
     } catch (error) {
-      console.error('Error completing routine:', error);
+      console.error('Error rendering tab:', error);
     }
   };
 
