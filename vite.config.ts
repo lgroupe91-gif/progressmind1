@@ -30,10 +30,6 @@ export default defineConfig({
     react()
   ],
   optimizeDeps: {
-    exclude: ['lucide-react'],
-    include: ['react', 'react-dom']
-  },
-  define: {
-    global: 'globalThis'
+    include: ['react', 'react-dom', 'lucide-react']
   }
 });
