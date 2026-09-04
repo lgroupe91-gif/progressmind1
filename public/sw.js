@@ -1,9 +1,9 @@
-const CACHE_NAME = 'routinemind-v2';
+const CACHE_NAME = 'routinemind-v3';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.add('/'))
+    caches.open(CACHE_NAME).then((cache) => cache.add('/')).catch(() => {})
   );
 });
 
@@ -30,7 +30,7 @@ self.addEventListener('fetch', (event) => {
       fetch(request)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put(request, copy));
+          caches.open(CACHE_NAME).then((c) => c.put(request, copy)).catch(() => {});
           return res;
         })
         .catch(() => caches.match(request).then((r) => r || caches.match('/')))
@@ -44,10 +44,10 @@ self.addEventListener('fetch', (event) => {
       return fetch(request).then((res) => {
         if (res && res.status === 200 && res.type === 'basic') {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put(request, copy));
+          caches.open(CACHE_NAME).then((c) => c.put(request, copy)).catch(() => {});
         }
         return res;
-      });
+      }).catch(() => cached);
     })
   );
 });
